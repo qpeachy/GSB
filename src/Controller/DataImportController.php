@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Etat;
 use App\Entity\FicheFrais;
 use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
@@ -54,12 +55,23 @@ class DataImportController extends AbstractController
             $newFicheFrais->setNbrJusificatif($ficheFrais->nbJustificatifs);
             $newFicheFrais->setMontantValide($ficheFrais->montantValide);
             $newFicheFrais->setDateDerniereModif(new \DateTime($ficheFrais->dateModif));
-
-//            $newFicheFrais->setUser();
-//
-//
-//            $doctrine->getManager()->persist();//persist the object $user in the database
-//            $doctrine->getManager()->flush(); // flush is called to persist it
+            $newFicheFrais->setUser($user);
+            switch ($ficheFrais -> idEtat){
+                case 'CL':
+                    $etat=$doctrine->getRepository(Etat::class)->find(1);
+                    break;
+                case 'CR':
+                    $etat=$doctrine->getRepository(Etat::class)->find(2);
+                    break;
+                case 'RB':
+                    $etat=$doctrine->getRepository(Etat::class)->find(3);
+                    break;
+                case 'VA':
+                    $etat=$doctrine->getRepository(Etat::class)->find(4);
+            }
+            $newFicheFrais->setEtat($etat);
+            $doctrine->getManager()->persist($newFicheFrais);//persist the object $user in the database
+            $doctrine->getManager()->flush(); // flush is called to persist it
         }
 
         return $this->render('data_import/index.html.twig', [
