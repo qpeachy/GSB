@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\LigneFraisHorsForfaisRepository;
+use App\Repository\LigneFraisHorsForfaitRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: LigneFraisHorsForfaisRepository::class)]
-class LigneFraisHorsForfais
+#[ORM\Entity(repositoryClass: LigneFraisHorsForfaitRepository::class)]
+class LigneFraisHorsForfait
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -23,6 +23,9 @@ class LigneFraisHorsForfais
     #[ORM\ManyToOne(inversedBy: 'ligneFraisHorsForfait')]
     #[ORM\JoinColumn(nullable: false)]
     private ?FicheFrais $fichefrais = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $date = null;
 
     public function getId(): ?int
     {
@@ -61,6 +64,18 @@ class LigneFraisHorsForfais
     public function setFichefrais(?FicheFrais $fichefrais): self
     {
         $this->fichefrais = $fichefrais;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
 
         return $this;
     }

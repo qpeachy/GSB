@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\LigneFraisHorsForfais;
+use App\Entity\LigneFraisHorsForfait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<LigneFraisHorsForfais>
+ * @extends ServiceEntityRepository<LigneFraisHorsForfait>
  *
- * @method LigneFraisHorsForfais|null find($id, $lockMode = null, $lockVersion = null)
- * @method LigneFraisHorsForfais|null findOneBy(array $criteria, array $orderBy = null)
- * @method LigneFraisHorsForfais[]    findAll()
- * @method LigneFraisHorsForfais[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method LigneFraisHorsForfait|null find($id, $lockMode = null, $lockVersion = null)
+ * @method LigneFraisHorsForfait|null findOneBy(array $criteria, array $orderBy = null)
+ * @method LigneFraisHorsForfait[]    findAll()
+ * @method LigneFraisHorsForfait[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class LigneFraisHorsForfaisRepository extends ServiceEntityRepository
+class LigneFraisHorsForfaitRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, LigneFraisHorsForfais::class);
+        parent::__construct($registry, LigneFraisHorsForfait::class);
     }
 
-    public function add(LigneFraisHorsForfais $entity, bool $flush = false): void
+    public function add(LigneFraisHorsForfait $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class LigneFraisHorsForfaisRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(LigneFraisHorsForfais $entity, bool $flush = false): void
+    public function remove(LigneFraisHorsForfait $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 

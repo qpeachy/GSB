@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TypeFraisForfait index{% endblock %}
+
+{% block body %}
+    <h1>TypeFraisForfait index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>Montant</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for type_frais_forfait in type_frais_forfaits %}
+            <tr>
+                <td>{{ type_frais_forfait.id }}</td>
+                <td>{{ type_frais_forfait.libelle }}</td>
+                <td>{{ type_frais_forfait.montant }}</td>
+                <td>
+                    <a href="{{ path('app_type_frais_forfait_show', {'id': type_frais_forfait.id}) }}">show</a>
+                    <a href="{{ path('app_type_frais_forfait_edit', {'id': type_frais_forfait.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_type_frais_forfait_new') }}">Create new</a>
+{% endblock %}

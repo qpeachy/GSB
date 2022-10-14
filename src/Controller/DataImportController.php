@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Etat;
 use App\Entity\FicheFrais;
+use App\Entity\LigneFraisForfaitise;
+use App\Entity\LigneFraisHorsForfait;
+use App\Entity\TypeFraisForfait;
 use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -71,6 +74,85 @@ class DataImportController extends AbstractController
             }
             $newFicheFrais->setEtat($etat);
             $doctrine->getManager()->persist($newFicheFrais);//persist the object $user in the database
+            $doctrine->getManager()->flush(); // flush is called to persist it
+        }
+
+        return $this->render('data_import/index.html.twig', [
+            'controller_name' => 'DataImportController',
+        ]);
+    }
+
+    #[Route('/dataimporttypefraisforfait', name: 'app_data_typefraisforfait')]
+    public function typeFraisForfait(ManagerRegistry $doctrine): Response
+    {
+        $path="./fraisforfait.json";
+        $file=file_get_contents($path);
+        $typesFraisForfait = json_decode($file);
+        foreach ($typesFraisForfait as $typeFraisForfait){
+            $newTypeFraisForfait=new TypeFraisForfait();
+            $newTypeFraisForfait->setLibelle($typeFraisForfait->libelle);
+            $newTypeFraisForfait->setMontant($typeFraisForfait->montant);
+            $doctrine->getManager()->persist($newTypeFraisForfait);//persist the object $user in the database
+            $doctrine->getManager()->flush(); // flush is called to persist it
+        }
+
+        return $this->render('data_import/index.html.twig', [
+            'controller_name' => 'DataImportController',
+        ]);
+    }
+
+    #[Route('/dataimportlignefraisforfait', name: 'app_data_ligneFraisForfait')]
+    public function ligneFraisForfait(ManagerRegistry $doctrine): Response
+    {
+        $path="./lignefraisforfait.json";
+        $file=file_get_contents($path);
+        $lignesFraisForfait = json_decode($file);
+        foreach ($lignesFraisForfait as $ligneFraisForfait){
+           $newLigneFraisForfait= new LigneFraisForfaitise();
+           $user=$doctrine->getRepository(User::class)->findOneBy(['oldId'=>$ligneFraisForfait->idVisiteur]);
+           $ficheFrais=$doctrine->getRepository(FicheFrais::class)->findOneBy(['user' => $user, 'mois'=>$ligneFraisForfait->mois]);
+           $newLigneFraisForfait->setQuantite($ligneFraisForfait->quantite);
+            switch($ligneFraisForfait->idFraisForfait) {
+                case'ETP':
+                    $type = $doctrine->getRepository(TypeFraisForfait::class)->find(1);
+                    break;
+                case 'KM':
+                    $type = $doctrine->getRepository(TypeFraisForfait::class)->find(2);
+                    break;
+                case'NUI':
+                    $type = $doctrine->getRepository(TypeFraisForfait::class)->find(3);
+                    break;
+                case'REP':
+                    $type = $doctrine->getRepository(TypeFraisForfait::class)->find(4);
+                    break;
+
+            }
+            $newLigneFraisForfait->setTypeFraisForfait($type);
+            $newLigneFraisForfait->setFicheFrais($ficheFrais);
+            $doctrine->getManager()->persist($newLigneFraisForfait);//persist the object $user in the database
+            $doctrine->getManager()->flush(); // flush is called to persist it
+        }
+
+        return $this->render('data_import/index.html.twig', [
+            'controller_name' => 'DataImportController',
+        ]);
+    }
+
+    #[Route('/dataimportligneFraisHorsForfait', name: 'app_data_ligneFraisHorsForfait')]
+    public function ligneFraisHorsForfait(ManagerRegistry $doctrine): Response
+    {
+        $path="./lignefraishorsforfait.json";
+        $file=file_get_contents($path);
+        $lignesFraisHorsForfait = json_decode($file);
+        foreach ($lignesFraisHorsForfait as $ligneFraisHorsForfait){
+            $newLigneFraisHorsForfait= new LigneFraisHorsForfait();
+            $newLigneFraisHorsForfait->setDate(new \DateTime($ligneFraisHorsForfait->date));
+            $newLigneFraisHorsForfait->setMontant($ligneFraisHorsForfait->montant);
+            $newLigneFraisHorsForfait->setLibelle($ligneFraisHorsForfait->libelle);
+            $user=$doctrine->getRepository(User::class)->findOneBy(['oldId'=>$ligneFraisHorsForfait->idVisiteur]);
+            $ficheFrais=$doctrine->getRepository(FicheFrais::class)->findOneBy(['user' => $user, 'mois'=>$ligneFraisHorsForfait->mois]);
+            $newLigneFraisHorsForfait->setFichefrais($ficheFrais);
+            $doctrine->getManager()->persist($newLigneFraisHorsForfait);//persist the object $user in the database
             $doctrine->getManager()->flush(); // flush is called to persist it
         }
 

@@ -32,7 +32,7 @@ class FicheFrais
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\OneToMany(mappedBy: 'fichefrais', targetEntity: LigneFraisHorsForfais::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'fichefrais', targetEntity: LigneFraisHorsForfait::class, orphanRemoval: true)]
     private Collection $ligneFraisHorsForfait;
 
     #[ORM\OneToMany(mappedBy: 'ficheFrais', targetEntity: LigneFraisForfaitise::class, orphanRemoval: true)]
@@ -114,14 +114,14 @@ class FicheFrais
     }
 
     /**
-     * @return Collection<int, LigneFraisHorsForfais>
+     * @return Collection<int, LigneFraisHorsForfait>
      */
     public function getLigneFraisHorsForfait(): Collection
     {
         return $this->ligneFraisHorsForfait;
     }
 
-    public function addLigneFraisHorsForfait(LigneFraisHorsForfais $ligneFraisHorsForfait): self
+    public function addLigneFraisHorsForfait(LigneFraisHorsForfait $ligneFraisHorsForfait): self
     {
         if (!$this->ligneFraisHorsForfait->contains($ligneFraisHorsForfait)) {
             $this->ligneFraisHorsForfait->add($ligneFraisHorsForfait);
@@ -131,7 +131,7 @@ class FicheFrais
         return $this;
     }
 
-    public function removeLigneFraisHorsForfait(LigneFraisHorsForfais $ligneFraisHorsForfait): self
+    public function removeLigneFraisHorsForfait(LigneFraisHorsForfait $ligneFraisHorsForfait): self
     {
         if ($this->ligneFraisHorsForfait->removeElement($ligneFraisHorsForfait)) {
             // set the owning side to null (unless already changed)

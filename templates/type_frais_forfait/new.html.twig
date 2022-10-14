@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New TypeFraisForfait{% endblock %}
+
+{% block body %}
+    <h1>Create new TypeFraisForfait</h1>
+
+    {{ include('type_frais_forfait/_form.html.twig') }}
+
+    <a href="{{ path('app_type_frais_forfait_index') }}">back to list</a>
+{% endblock %}
