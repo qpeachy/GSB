@@ -55,7 +55,7 @@ class DataImportController extends AbstractController
             $newFicheFrais = new FicheFrais();
             $user=$doctrine->getRepository(User::class)->findOneBy(['oldId'=>$ficheFrais->idVisiteur]);
             $newFicheFrais->setMois($ficheFrais->mois);
-            $newFicheFrais->setNbrJusificatif($ficheFrais->nbJustificatifs);
+            $newFicheFrais->setNbrJustificatif($ficheFrais->nbJustificatifs);
             $newFicheFrais->setMontantValide($ficheFrais->montantValide);
             $newFicheFrais->setDateDerniereModif(new \DateTime($ficheFrais->dateModif));
             $newFicheFrais->setUser($user);

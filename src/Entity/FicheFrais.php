@@ -17,7 +17,7 @@ class FicheFrais
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $nbrJusificatif = null;
+    private ?int $nbrJustificatif = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $montantValide = null;
@@ -53,14 +53,14 @@ class FicheFrais
         return $this->id;
     }
 
-    public function getNbrJusificatif(): ?int
+    public function getNbrJustificatif(): ?int
     {
-        return $this->nbrJusificatif;
+        return $this->nbrJustificatif;
     }
 
-    public function setNbrJusificatif(int $nbrJusificatif): self
+    public function setNbrJustificatif(int $nbrJustificatif): self
     {
-        $this->nbrJusificatif = $nbrJusificatif;
+        $this->nbrJustificatif = $nbrJustificatif;
 
         return $this;
     }
@@ -151,7 +151,7 @@ class FicheFrais
         return $this->ficheFrais;
     }
 
-    public function addFicheFrai(LigneFraisForfaitise $ficheFrai): self
+    public function addFicheFrais(LigneFraisForfaitise $ficheFrai): self
     {
         if (!$this->ficheFrais->contains($ficheFrai)) {
             $this->ficheFrais->add($ficheFrai);
@@ -161,7 +161,7 @@ class FicheFrais
         return $this;
     }
 
-    public function removeFicheFrai(LigneFraisForfaitise $ficheFrai): self
+    public function removeFicheFrais(LigneFraisForfaitise $ficheFrai): self
     {
         if ($this->ficheFrais->removeElement($ficheFrai)) {
             // set the owning side to null (unless already changed)
