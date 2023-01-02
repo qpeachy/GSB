@@ -36,7 +36,7 @@ class FicheFrais
     private Collection $ligneFraisHorsForfait;
 
     #[ORM\OneToMany(mappedBy: 'ficheFrais', targetEntity: LigneFraisForfaitise::class, orphanRemoval: true)]
-    private Collection $ficheFrais;
+    private Collection $ligneFraisForfait;
 
     #[ORM\ManyToOne(inversedBy: 'ficheFrais')]
     #[ORM\JoinColumn(nullable: false)]
@@ -45,7 +45,7 @@ class FicheFrais
     public function __construct()
     {
         $this->ligneFraisHorsForfait = new ArrayCollection();
-        $this->ficheFrais = new ArrayCollection();
+        $this->ligneFraisForfait = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -146,15 +146,15 @@ class FicheFrais
     /**
      * @return Collection<int, LigneFraisForfaitise>
      */
-    public function getFicheFrais(): Collection
+    public function getLigneFraisForfait(): Collection
     {
-        return $this->ficheFrais;
+        return $this->ligneFraisForfait;
     }
 
     public function addFicheFrais(LigneFraisForfaitise $ficheFrai): self
     {
-        if (!$this->ficheFrais->contains($ficheFrai)) {
-            $this->ficheFrais->add($ficheFrai);
+        if (!$this->ligneFraisForfait->contains($ficheFrai)) {
+            $this->ligneFraisForfait->add($ficheFrai);
             $ficheFrai->setFicheFrais($this);
         }
 
@@ -163,7 +163,7 @@ class FicheFrais
 
     public function removeFicheFrais(LigneFraisForfaitise $ficheFrai): self
     {
-        if ($this->ficheFrais->removeElement($ficheFrai)) {
+        if ($this->ligneFraisForfait->removeElement($ficheFrai)) {
             // set the owning side to null (unless already changed)
             if ($ficheFrai->getFicheFrais() === $this) {
                 $ficheFrai->setFicheFrais(null);

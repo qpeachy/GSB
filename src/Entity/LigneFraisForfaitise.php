@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\LigneFraisForfaitiseRepository;
+use Decimal\Decimal;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LigneFraisForfaitiseRepository::class)]
@@ -63,5 +64,10 @@ class LigneFraisForfaitise
         $this->typeFraisForfait = $typeFraisForfait;
 
         return $this;
+    }
+
+    public function montantTotal() : string {
+        $montantTotal = floatval($this->getTypeFraisForfait()->getMontant()) * $this->getQuantite();
+        return (string)$montantTotal;
     }
 }

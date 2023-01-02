@@ -1,0 +1,19 @@
+.btn-group button {
+    background-color: white; /* White background */
+    color: black; /* Black text */
+    border: 2px solid #7a7171; /* Grey borders */
+    padding: 10px 24px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    width: 100%; /* Set a width if needed */
+    display: block; /* Make the buttons appear below each other */
+    text-align: left;
+}
+
+.btn-group button:not(:last-child) {
+    border-bottom: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+    background-color: #7a7171;
+}

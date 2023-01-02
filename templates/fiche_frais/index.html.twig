@@ -11,11 +11,25 @@
 <div class="example-wrapper">
     <h1>Hello {{ user.prenom }}!</h1>
 
-    Voici ta liste de FicheFrais :
-    <ul>
-        {% for fichefrais in fichesfrais %}
-            <li>{{ fichefrais.id }} - {{ fichefrais.mois }} - {{ fichefrais.etat.libelle }} - Justificatifs : {{ fichefrais.nbrJustificatif }}</li>
-        {% endfor %}
-    </ul>
+    <div class = "h3">
+        Voici ta liste de FicheFrais :
+    </div>
+
+    <div>
+        <link href="{{ asset('css/fiche_frais_btn.css') }}" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@200&display=swap" rel="stylesheet" />
+        <style>
+            a:link, a:visited, a:hover, a:active{
+                text-decoration: none;
+            }
+        </style>
+        <div class="btn-group" role="group" aria-label="...">
+            {% for fichefrais in fichesfrais %}
+                <a href = "{{ path('app_lignes_frais', {id : fichefrais.id}) }}" >
+                    <button class = "button">{{ fichefrais.id }} - {{ fichefrais.mois }} - {{ fichefrais.etat.libelle }} - Justificatifs : {{ fichefrais.nbrJustificatif }} | <strong> {{ fichefrais.montantValide }} €</strong></button>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
 </div>
 {% endblock %}
