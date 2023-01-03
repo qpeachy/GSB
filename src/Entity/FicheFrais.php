@@ -184,4 +184,8 @@ class FicheFrais
 
         return $this;
     }
+
+    public function getPrime(){
+
+    }
 }
