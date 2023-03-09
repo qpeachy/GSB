@@ -33,19 +33,19 @@ class PrimeController extends AbstractController
         ]);
     }
 
-/*    public function primeD(ManagerRegistry $doctrine): Response
-    {
-        $userL = $doctrine->getRepository(User::class)->findAll();
-        $nbrUser = count($userL);
-        $ficheFraisL = $doctrine->getRepository(FicheFrais::class)->findAll();
-        $prime = 0;
-        foreach  ($ficheFraisL as $FF){
-
-        };
-        return $this->render('prime/index.html.twig', [
-            'DprimeT' => $primeT,
-            'DprimeV'=>$primeV,
-        ]);
-    }*/
+//    public function primeD(ManagerRegistry $doctrine): Response
+//    {
+//        $userL = $doctrine->getRepository(User::class)->findAll();
+//        $nbrUser = count($userL);
+//        $ficheFraisL = $doctrine->getRepository(FicheFrais::class)->findAll();
+//        $prime = 0;
+//        foreach  ($ficheFraisL as $FF){
+//
+//        };
+//        return $this->render('prime/index.html.twig', [
+//            'DprimeT' => $primeT,
+//            'DprimeV'=>$primeV,
+//        ]);
+//    }
 
 }
