@@ -14,38 +14,32 @@ class PrimeController extends AbstractController
     #[Route('/prime', name: 'app_prime')]
     public function primeV(ManagerRegistry $doctrine): Response
     {
-        $userL = $doctrine->getRepository(User::class)->findAll();
-        $nbrUser = count($userL);
-        $ficheFraisL = $doctrine->getRepository(FicheFrais::class)->findAll();
-        $prime = 0;
-        foreach  ($ficheFraisL as $FF){
-            $prime+=floatval($FF->getMontantValide());
+        $user = $doctrine->getRepository(User::class)->findAll();
+        $nbrUser = count($user);
+        $fichesFrais = $doctrine->getRepository(FicheFrais::class)->findAll();
+        $primeT = 0;
+        foreach  ($fichesFrais as $FF){
+            $primeT+=floatval($FF->getMontantValide());
         };
-        $prime = $prime*0.095;
-        $primeV = ($prime/$nbrUser);
-        $primeV = number_format($primeV, 2, ',', ' ');
-        $primeT = number_format($prime, 2, ',', ' ');
+        $primeT = $primeT*0.095;
+        $primeV = ($primeT/$nbrUser);
+
+
+        $primeD = 0;
+        foreach($fichesFrais as $FF){
+            $primeD += floatval($FF->getPrime());
+        };
+        $primeD*=0.095;
+        $primeDbis = ($primeD/$nbrUser);
+
 
         return $this->render('prime/index.html.twig', [
             'controller_name' => 'PrimeController',
             'primeT' => $primeT,
             'primeV'=>$primeV,
+            'Dprime' => $primeD,
+            'Dprimebis' => $primeDbis,
         ]);
     }
-
-//    public function primeD(ManagerRegistry $doctrine): Response
-//    {
-//        $userL = $doctrine->getRepository(User::class)->findAll();
-//        $nbrUser = count($userL);
-//        $ficheFraisL = $doctrine->getRepository(FicheFrais::class)->findAll();
-//        $prime = 0;
-//        foreach  ($ficheFraisL as $FF){
-//
-//        };
-//        return $this->render('prime/index.html.twig', [
-//            'DprimeT' => $primeT,
-//            'DprimeV'=>$primeV,
-//        ]);
-//    }
 
 }

@@ -185,7 +185,19 @@ class FicheFrais
         return $this;
     }
 
-    public function getPrime(){
+    public function getPrime() : float
+    {
+        $montant = 0;
+        $ff = $this->getLigneFraisForfait();
+        $fhf = $this->getLigneFraisHorsForfait();
 
+        foreach ($ff as $i){
+            $montant+=($i->getQuantite()*$i->getTypeFraisForfait()->getMontant());
+        }
+
+        foreach ($fhf as $i){
+            $montant+=$i->getMontant();
+        }
+        return $montant;
     }
 }

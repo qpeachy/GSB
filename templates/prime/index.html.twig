@@ -11,16 +11,16 @@
 <div class="example-wrapper">
     <h1>Hello {{ controller_name }}! ✅</h1>
 
-    Valide:
+    Prime Montant Validé:
     <ul>
-        <li>Total : {{ primeT }} €</li>
-        <li>Total : {{ primeV }} €</li>
+        <li>Total : {{ primeT | number_format( 2, ',', ' ')}} €</li>
+        <li>Total par client: {{ primeV | number_format( 2, ',', ' ')}} €</li>
     </ul>
 
-    Declare:
+    Prime Montant Déclaré:
     <ul>
-        <li>Total : {{ primeT }} €</li>
-        <li>Total : {{ primeV }} €</li>
+        <li>Total : {{ Dprime | number_format( 2, ',', ' ')}} €</li>
+        <li>Total par client : {{ Dprimebis | number_format( 2, ',', ' ')}} €</li>
     </ul>
 
 </div>
