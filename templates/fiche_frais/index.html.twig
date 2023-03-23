@@ -12,24 +12,51 @@
     <h1>Hello {{ user.prenom }}!</h1>
 
     <div class = "h3">
-        Voici ta liste de FicheFrais :
+        Choisie le mois de la fiche frais :
     </div>
+{{ form_start(form) }}
+   {{ form(form) }}
+{{ form_end(form) }}
 
-    <div>
-        <link href="{{ asset('css/fiche_frais_btn.css') }}" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@200&display=swap" rel="stylesheet" />
+    {% if bool == true %}
         <style>
-            a:link, a:visited, a:hover, a:active{
-                text-decoration: none;
+            table,
+            td {
+                border: 1px solid #333;
             }
+
+            thead,
+            tfoot {
+                background-color: #333;
+                color: #fff;
+            }
+
         </style>
-        <div class="btn-group" role="group" aria-label="...">
-            {% for fichefrais in fichesfrais %}
-                <a href = "{{ path('app_lignes_frais', {id : fichefrais.id}) }}" >
-                    <button class = "button">{{ fichefrais.id }} - {{ fichefrais.mois }} - {{ fichefrais.etat.libelle }} - Justificatifs : {{ fichefrais.nbrJustificatif }} | <strong> {{ fichefrais.montantValide }} €</strong></button>
-                </a>
-            {% endfor %}
+
+        <div class="row">
+            <div class="col">
+                <p>Etat : {{ FF.etat.libelle }} depuis le {{ FF.dateDerniereModif|date('y-m-d') }}</p>
+                <p>Montant validé : {{ FF.montantValide }}</p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Forfait étape</th>
+                        <th>Frais kilométrique</th>
+                        <th>Nuitée Hôtel</th>
+                        <th>Repas Restaurant</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ FF.ligneFraisForfait.}}</td>
+                        <td>with two columns</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
         </div>
-    </div>
+
+    {% endif %}
 </div>
 {% endblock %}
