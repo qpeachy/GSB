@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\FicheFrais;
+use App\Entity\LigneFraisForfaitise;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,7 +14,7 @@ class LigneFraisController extends AbstractController
     public function Lines(FicheFrais $fichefrais): Response
     {
         $lesLignesFHF = $fichefrais->getLigneFraisHorsForfait();
-        $lesLignesFF = $fichefrais->getLigneFraisForfait();
+        $lesLignesFF = $fichefrais->getLigneFraisForfaitise();
         return $this->render('ligne_frais/index.html.twig', [
             'controller_name' => 'LigneFraisController',
             'lesLignesFHF' => $lesLignesFHF,

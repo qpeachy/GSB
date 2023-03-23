@@ -36,7 +36,6 @@ class FicheFraisController extends AbstractController
         $form->handleRequest($request);
         $bool = false;
 
-
         if ($form->isSubmitted() && $form->isValid()) {
             $bool = true;
             $formD=$form->getData();

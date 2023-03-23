@@ -32,11 +32,11 @@ class FicheFrais
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\OneToMany(mappedBy: 'fichefrais', targetEntity: LigneFraisHorsForfait::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'ficheFrais', targetEntity: LigneFraisHorsForfait::class, orphanRemoval: true)]
     private Collection $ligneFraisHorsForfait;
 
     #[ORM\OneToMany(mappedBy: 'ficheFrais', targetEntity: LigneFraisForfaitise::class, orphanRemoval: true)]
-    private Collection $ligneFraisForfait;
+    private Collection $LigneFraisForfaitise;
 
     #[ORM\ManyToOne(inversedBy: 'ficheFrais')]
     #[ORM\JoinColumn(nullable: false)]
@@ -45,7 +45,7 @@ class FicheFrais
     public function __construct()
     {
         $this->ligneFraisHorsForfait = new ArrayCollection();
-        $this->ligneFraisForfait = new ArrayCollection();
+        $this->LigneFraisForfaitise = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -146,15 +146,15 @@ class FicheFrais
     /**
      * @return Collection<int, LigneFraisForfaitise>
      */
-    public function getLigneFraisForfait(): Collection
+    public function getLigneFraisForfaitise(): Collection
     {
-        return $this->ligneFraisForfait;
+        return $this->LigneFraisForfaitise;
     }
 
     public function addFicheFrais(LigneFraisForfaitise $ficheFrai): self
     {
-        if (!$this->ligneFraisForfait->contains($ficheFrai)) {
-            $this->ligneFraisForfait->add($ficheFrai);
+        if (!$this->LigneFraisForfaitise->contains($ficheFrai)) {
+            $this->LigneFraisForfaitise->add($ficheFrai);
             $ficheFrai->setFicheFrais($this);
         }
 
@@ -163,7 +163,7 @@ class FicheFrais
 
     public function removeFicheFrais(LigneFraisForfaitise $ficheFrai): self
     {
-        if ($this->ligneFraisForfait->removeElement($ficheFrai)) {
+        if ($this->LigneFraisForfaitise->removeElement($ficheFrai)) {
             // set the owning side to null (unless already changed)
             if ($ficheFrai->getFicheFrais() === $this) {
                 $ficheFrai->setFicheFrais(null);
