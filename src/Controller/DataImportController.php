@@ -151,7 +151,7 @@ class DataImportController extends AbstractController
             $newLigneFraisHorsForfait->setLibelle($ligneFraisHorsForfait->libelle);
             $user=$doctrine->getRepository(User::class)->findOneBy(['oldId'=>$ligneFraisHorsForfait->idVisiteur]);
             $ficheFrais=$doctrine->getRepository(FicheFrais::class)->findOneBy(['user' => $user, 'mois'=>$ligneFraisHorsForfait->mois]);
-            $newLigneFraisHorsForfait->setFichefrais($ficheFrais);
+            $newLigneFraisHorsForfait->setFicheFrais($ficheFrais);
             $doctrine->getManager()->persist($newLigneFraisHorsForfait);//persist the object $user in the database
             $doctrine->getManager()->flush(); // flush is called to persist it
         }

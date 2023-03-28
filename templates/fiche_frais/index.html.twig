@@ -4,57 +4,125 @@
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .fiche_frais_form { margin:auto; font: 18px/1.5 sans-serif;}
+    .fiche_frais_form code { background: #F5F5F5; padding: 2px 6px; }
+    .fiche_frais_form p {color: #1f2124}
+    .month_choices {
+        width: fit-content;
+        height: 30px;
+        border: 1px solid #999;
+        font-size: 18px;
+        color: #1c87c9;
+        background-color: #eee;
+        border-radius: 5px;
+        box-shadow: 4px 4px #ccc;
+    }
+    .tab1{
+        float:left;
+        width:100px;
+    }
+    .tab2{
+        float:left;
+        width:100px;
+    }
 </style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ user.prenom }}!</h1>
+<div class="fiche_frais_form d-flex align-items-center">
+    <h1>Bonjour {{ user.prenom }}!</h1>
 
     <div class = "h3">
         Choisie le mois de la fiche frais :
     </div>
-{{ form_start(form) }}
-   {{ form(form) }}
-{{ form_end(form) }}
+
+    <div class="p-container">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col">{{ form_label(form.mois)}}</div>
+            <div class=" col month_choices">{{ form_widget(form.mois) }}</div>
+        </div>
+
+        <div class="row ">
+            <div class="col">
+                {{ form_row(form.valider) }}
+            </div>
+            <div class="col">
+                {{ form_row(form.effacer) }}
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
 
     {% if bool == true %}
         <style>
-            table,
+            table{
+                text-align:center;
+                width: 50%;
+            }
             td {
                 border: 1px solid #333;
             }
 
-            thead,
+            th{
+                text-align:center;
+                color: #e0e0e0;
+                background-color: #1f2124;
+            }
             tfoot {
                 background-color: #333;
                 color: #fff;
+                padding: 5px;
             }
 
         </style>
 
-        <div class="row">
-            <div class="col">
-                <p>Etat : {{ FF.etat.libelle }} depuis le {{ FF.dateDerniereModif|date('y-m-d') }}</p>
-                <p>Montant validé : {{ FF.montantValide }}</p>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Forfait étape</th>
-                        <th>Frais kilométrique</th>
-                        <th>Nuitée Hôtel</th>
-                        <th>Repas Restaurant</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>{{ FF.ligneFraisForfaitise.}}</td>
-                        <td>with two columns</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6">
+                    <p>Etat : {{ FF.etat.libelle }} depuis le {{ FF.dateDerniereModif|date('o-F') }}</p>
+                    <p>Montant validé : {{ FF.montantValide }}</p>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Forfait étape</th>
+                            <th>Frais kilométrique</th>
+                            <th>Nuitée Hôtel</th>
+                            <th>Repas Restaurant</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            {% for l in FF.ligneFraisForfaitise %}
+                                <td>{{ l.quantite }}</td>
+                            {%endfor %}
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-6">
+                    <p>Descriptif des éléments hors forfait - {{ FF.nbrJustificatif}} justificatifs reçus -</p>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Libellé</th>
+                            <th>Montant</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for l in FF.ligneFraisHorsForfait %}
+                        <tr>
 
+                            <td>{{ l.date|date('o-F') }}</td>
+                            <td>{{ l.libelle }}</td>
+                            <td>{{ l.montant }}</td>
+                        </tr>
+                        {%endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
         </div>
 
     {% endif %}

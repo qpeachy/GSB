@@ -22,7 +22,7 @@ class LigneFraisHorsForfait
 
     #[ORM\ManyToOne(inversedBy: 'ligneFraisHorsForfait')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?FicheFrais $fichefrais = null;
+    private ?FicheFrais $ficheFrais = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date = null;
@@ -56,14 +56,14 @@ class LigneFraisHorsForfait
         return $this;
     }
 
-    public function getFichefrais(): ?FicheFrais
+    public function getFicheFrais(): ?FicheFrais
     {
-        return $this->fichefrais;
+        return $this->ficheFrais;
     }
 
-    public function setFichefrais(?FicheFrais $fichefrais): self
+    public function setFicheFrais(?FicheFrais $ficheFrais): self
     {
-        $this->fichefrais = $fichefrais;
+        $this->ficheFrais = $ficheFrais;
 
         return $this;
     }

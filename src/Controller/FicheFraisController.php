@@ -37,17 +37,25 @@ class FicheFraisController extends AbstractController
         $bool = false;
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $bool = true;
-            $formD=$form->getData();
-            $result = $formD['Mois:'];
-            foreach ($fichesfrais as $f){
-               if ($f->getMois() == $result){
-                   $laFF=$f;
-               }
+
+            if($form->get('effacer')->isClicked()){
+                $bool = false;
             }
+            if($form->get('valider')->isClicked()){
+                $bool = true;
+                $formD=$form->getData();
+                $result = $formD['mois'];
+                foreach ($fichesfrais as $f){
+                    if ($f->getMois() == $result){
+                        $laFF=$f;
+                    }
+                }
+            }
+
         }
 
-        return $this->renderForm('fiche_frais/index.html.twig', [
+
+        return $this->render('fiche_frais/index.html.twig', [
             'controller_name' => 'FicheFraisController',
             'user' => $user,
             'FF' => $laFF,
