@@ -3,39 +3,60 @@
 {% block title %}Login in!{% endblock %}
 
 {% block body %}
-    <form action="{{ path('app_login') }}" method="post">
-     {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-     {% endif %}
 
-    {% block stylesheets %}
-        {{ encore_entry_link_tags('app') }}
-        <link rel="stylesheet" type="text/css" href="{{ asset('CSS/login.css') }}">
-    {% endblock %}
+    <style>
+        .login{
 
-        <h1>Utilisateur Log in</h1>
-        <div class="inset">
+        }
+
+        .card{
+            background-color: #ffd1dc;
+            color: deeppink;
+            align-items: center;
+            text-align: center;
+            margin: auto;
+            width: 500px;
+        }
+        .inset input[type=text], input[type=password] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            background: white;
+        }
+    </style>
+
+    <div class="card">
+        <form action="{{ path('app_login') }}" method="post" class="login">
+            {% if error %}
+                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+            <h1>Utilisateur Log in</h1>
+            <div class="inset">
+                <p>
+                    <label for="username">LOGIN</label>
+                    <input type="text" name="_username" id="username" value="{{ last_username }}">
+                </p>
+                <p>
+                    <label for="password">PASSWORD</label>
+                    <input type="password" name="_password" id="password">
+                </p>
+                <p>
+                    <input type="checkbox" name="remember" id="remember">
+                    <label for="remember">Remember me for 7 days</label>
+                </p>
+                <p>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                </p>
+                <p>
+                    <input type="hidden" name="_target_path" value="/ficheFrais">
+                </p>
+            </div>
             <p>
-                <label for="username">LOGIN</label>
-                <input type="text" name="_username" id="username" value="{{ last_username }}">
+                <input type="submit" name="go" id="go" value="Log in" style="background: deeppink; width: 100%; display: inline-block; padding: 12px 20px; border: 1px solid #ccc;">
             </p>
-            <p>
-                <label for="password">PASSWORD</label>
-                <input type="password" name="_password" id="password">
-            </p>
-            <p>
-                <input type="checkbox" name="remember" id="remember">
-                <label for="remember">Remember me for 7 days</label>
-            </p>
-            <p>
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-            </p>
-            <p>
-                <input type="hidden" name="_target_path" value="/ficheFrais">
-            </p>
-        </div>
-        <p>
-            <input type="submit" name="go" id="go" value="Log in">
-        </p>
-    </form>
+        </form>
+    </div>
 {% endblock %}
