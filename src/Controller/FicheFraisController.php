@@ -32,6 +32,7 @@ class FicheFraisController extends AbstractController
             $mois[] = $f->getMois();
         }
         $laFF=null;
+
         $form=$this->createForm(FicheFraisType::class, null, ['mois_list'=>$mois]);
         $form->handleRequest($request);
         $bool = false;

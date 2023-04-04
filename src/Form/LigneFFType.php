@@ -2,29 +2,26 @@
 
 namespace App\Form;
 
-use App\Entity\FicheFrais;
+use App\Entity\LigneFraisForfaitise;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class FicheFrais1Type extends AbstractType
+class LigneFFType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nbrJustificatif')
-            ->add('montantValide')
-            ->add('dateDerniereModif')
-            ->add('mois')
-            ->add('user')
-            ->add('etat')
+            ->add('quantite')
+            ->add('ficheFrais')
+            ->add('typeFraisForfait')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => FicheFrais::class,
+            'data_class' => LigneFraisForfaitise::class,
         ]);
     }
 }

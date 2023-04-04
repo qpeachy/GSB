@@ -3,78 +3,51 @@
 namespace App\Controller;
 
 use App\Entity\FicheFrais;
-use App\Form\FicheFrais1Type;
-use App\Repository\FicheFraisRepository;
+use App\Form\CurrentFicheFraisType;
+use App\Form\FicheFraisType;
+use App\Form\LigneFFType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Validator\Constraints\Date;
 
-#[Route('/current_fiche_frais')]
 class CurrentFicheFraisController extends AbstractController
 {
-    #[Route('/', name: 'app_current_fiche_frais_index', methods: ['GET'])]
-    public function index(FicheFraisRepository $ficheFraisRepository): Response
+    #[Route('/current', name: 'app_current')]
+    public function index(ManagerRegistry $doctrine, Request $request): Response
     {
+        // usually you'll want to make sure the user is authenticated first,
+        // see "Authorization" below
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        // returns your User object, or null if the user is not authenticated
+        // use inline documentation to tell your editor your exact User class
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+
+        //get current YearMonth
+        $currentMonth = date('Ym');
+
+        //get FF of $currentMonth
+        $currentFF = $doctrine->getRepository(FicheFrais::class)->findBy(['mois' => $currentMonth, 'user' => $user]);
+
+        //verify that the FF exists, if not create FF
+        if($currentFF == null){ $currentFF = new FicheFrais(); }
+
+        //create from
+        $formLigneFF = $this->createForm(LigneFFType::class);
+        $formLigneFF->handleRequest($request);
+
+        //When form is validated
+        if ($formLigneFF->isSubmitted() && $formLigneFF->isValid()) {
+
+        }
+
         return $this->render('current_fiche_frais/index.html.twig', [
-            'fiche_frais' => $ficheFraisRepository->findAll(),
-        ]);
-    }
 
-    #[Route('/new', name: 'app_current_fiche_frais_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $ficheFrai = new FicheFrais();
-        $form = $this->createForm(FicheFrais1Type::class, $ficheFrai);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($ficheFrai);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_current_fiche_frais_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('current_fiche_frais/new.html.twig', [
-            'fiche_frai' => $ficheFrai,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_current_fiche_frais_show', methods: ['GET'])]
-    public function show(FicheFrais $ficheFrai): Response
-    {
-        return $this->render('current_fiche_frais/show.html.twig', [
-            'fiche_frai' => $ficheFrai,
-        ]);
-    }
-
-    #[Route('/{id}/edit', name: 'app_current_fiche_frais_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, FicheFrais $ficheFrai, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(FicheFrais1Type::class, $ficheFrai);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_current_fiche_frais_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('current_fiche_frais/edit.html.twig', [
-            'fiche_frai' => $ficheFrai,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_current_fiche_frais_delete', methods: ['POST'])]
-    public function delete(Request $request, FicheFrais $ficheFrai, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$ficheFrai->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($ficheFrai);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_current_fiche_frais_index', [], Response::HTTP_SEE_OTHER);
+            ]);
     }
 }
