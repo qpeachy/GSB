@@ -2,8 +2,12 @@
 
 namespace App\Form;
 
+use App\Entity\FicheFrais;
 use App\Entity\LigneFraisHorsForfait;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateIntervalType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,7 +19,13 @@ class LigneFHFType extends AbstractType
             ->add('libelle')
             ->add('montant')
             ->add('date')
-            ->add('ficheFrais')
+            ->add('newLine', SubmitType::class, [
+                'label'=> 'Ajouter',
+                'attr' => [
+                    'class' => 'btn btn-primary',
+                ]
+            ])
+
         ;
     }
 

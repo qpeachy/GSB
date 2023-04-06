@@ -55,9 +55,7 @@ class FicheFraisController extends AbstractController
 
         }
 
-
         return $this->render('fiche_frais/index.html.twig', [
-            'controller_name' => 'FicheFraisController',
             'user' => $user,
             'FF' => $laFF,
             'form'=>$form,
