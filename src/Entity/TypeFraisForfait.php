@@ -88,4 +88,6 @@ class TypeFraisForfait
 
         return $this;
     }
+
+
 }

@@ -4,32 +4,110 @@
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .fiche_frais_form {  font: 18px/1.5 sans-serif;text-align: center;}
+    .fiche_frais_form code { background: #F5F5F5; padding: 2px 6px; }
+    .fiche_frais_form p {color: #1f2124}
+    .card{
+        text-align: center;
+        margin: 20px;
+
+    }
+    .row{
+        justify-content: center;
+        margin: 10px;
+    }
+    .card{
+       flex-wrap: wrap;
+        display: inline-block;
+    }
+    .card-body{
+
+        background-color: #ffd1dc;
+        display: flex;
+    }
+    .card table th{
+        background-color: #ffa6c1;
+    }
+
 </style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ user.prenom }}!</h1>
+<div class="fiche_frais_form">
+    <h1 class="text-align-center">Bonjour {{ user.prenom }}!</h1>
 
-    <div class = "h3">
-        Voici ta liste de FicheFrais :
-    </div>
+    <h3>Choisi le mois de la fiche frais :</h3>
 
-    <div>
-        <link href="{{ asset('css/fiche_frais_btn.css') }}" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@200&display=swap" rel="stylesheet" />
-        <style>
-            a:link, a:visited, a:hover, a:active{
-                text-decoration: none;
-            }
-        </style>
-        <div class="btn-group" role="group" aria-label="...">
-            {% for fichefrais in fichesfrais %}
-                <a href = "{{ path('app_lignes_frais', {id : fichefrais.id}) }}" >
-                    <button class = "button">{{ fichefrais.id }} - {{ fichefrais.mois }} - {{ fichefrais.etat.libelle }} - Justificatifs : {{ fichefrais.nbrJustificatif }} | <strong> {{ fichefrais.montantValide }} €</strong></button>
-                </a>
-            {% endfor %}
+    <div class="card" >
+        {{ form_start(form) }}
+        <div class="row" style="display: flex">
+            <div class="col">{{ form_label(form.mois)}}</div>
+            <div class="col">{{ form_widget(form.mois) }}</div>
         </div>
+
+        <div class="row" style="display: flex">
+            <div class="col">{{ form_row(form.valider) }}</div>
+            <div class="col">{{ form_row(form.effacer) }}</div>
+            </div>
+        </div>
+        {{ form_end(form) }}
     </div>
+
+
+    {% if bool == true %}
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <p>Etat : {{ FF.etat.libelle }} depuis le {{ FF.dateDerniereModif|date('o F') }}</p>
+                    <p>Montant validé : {{ FF.montantValide }}€</p>
+                    <div class="card-body">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Forfait étape</th>
+                                <th>Frais kilométrique</th>
+                                <th>Nuitée Hôtel</th>
+                                <th>Repas Restaurant</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                {% for l in FF.ligneFraisForfaitise %}
+                                    <td>{{ l.quantite }}</td>
+                                {%endfor %}
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <p>Descriptif des éléments hors forfait - {{ FF.nbrJustificatif}} justificatifs reçus </p>
+                    <div class="card-body">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Libellé</th>
+                                <th>Montant</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for l in FF.ligneFraisHorsForfait %}
+                                <tr>
+                                    <td>{{ l.date|date('o F') }}</td>
+                                    <td>{{ l.libelle }}</td>
+                                    <td>{{ l.montant }}</td>
+                                </tr>
+                            {%endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    {% endif %}
 </div>
 {% endblock %}

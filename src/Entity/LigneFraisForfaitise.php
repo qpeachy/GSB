@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\LigneFraisForfaitiseRepository;
-use Decimal\Decimal;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LigneFraisForfaitiseRepository::class)]

@@ -1,0 +1,32 @@
+
+/*--------------------------------------------------------------
+# General
+--------------------------------------------------------------*/
+
+
+body {
+    content: "";
+    position: relative;
+    font-family: "Open Sans", sans-serif;
+    background:url("../img/background.jpg") top right no-repeat;
+    background-size: cover;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    z-index: -1;
+}
+nav {
+    background-color: transparent;
+    margin: 10px;
+    border-color: black;
+    font-weight: bold;
+}
+
+
+nav .nav-item .nav-link .btn{
+    color: black;
+    border-color: black;
+    margin: 10px;
+    font-weight: bold;
+}

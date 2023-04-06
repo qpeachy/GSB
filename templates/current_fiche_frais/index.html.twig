@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CurentFicheFrais index{% endblock %}
+
+{% block body %}
+    <style>
+        .current_form {  font: 18px/1.5 sans-serif;text-align: center;}
+        .current_form code { background: #F5F5F5; padding: 2px 6px;}
+        .current_form p {color: #1f2124}
+        .card{
+            text-align: center;
+            width: 500px;
+            height: 300px;
+        }
+        .card table th{
+            background-color: #ffa6c1;
+        }
+
+    </style>
+    <div class="current_form">
+        <h1>Modification de la fiche du mois</h1>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    {{ form_start(formLFF) }}
+                    <div class="row" style="display: flex">
+                        <div class="col">{{ form_label(formLFF.FE)}}</div>
+                        <div class="col">{{ form_widget(formLFF.FE) }}</div>
+                    </div>
+                    <div class="row" style="display: flex">
+                        <div class="col">{{ form_label(formLFF.FK)}}</div>
+                        <div class="col">{{ form_widget(formLFF.FK) }}</div>
+                    </div>
+                    <div class="row" style="display: flex">
+                        <div class="col">{{ form_label(formLFF.NH)}}</div>
+                        <div class="col">{{ form_widget(formLFF.NH) }}</div>
+                    </div>
+                    <div class="row" style="display: flex">
+                        <div class="col">{{ form_label(formLFF.RR)}}</div>
+                        <div class="col">{{ form_widget(formLFF.RR) }}</div>
+                    </div>
+
+                    <div>{{ form_row((formLFF.valider)) }}</div>
+                    {{ form_end(formLFF) }}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    {{ form_start(formLFHF) }}
+                    <div class="row" style="display: flex">
+                        <div class="col">{{ form_label(formLFHF.libelle)}}</div>
+                        <div class="col">{{ form_widget(formLFHF.libelle) }}</div>
+                    </div>
+                    <div class="row" style="display: flex">
+                        <div class="col">{{ form_label(formLFHF.montant)}}</div>
+                        <div class="col">{{ form_widget(formLFHF.montant) }}</div>
+                    </div>
+                    <div class="row" style="display: flex">
+                        <div class="col">{{ form_label(formLFHF.date)}}</div>
+                        <div class="col">{{ form_widget(formLFHF.date) }}</div>
+                    </div>
+                    <div>{{ form_row((formLFHF.newLine)) }}</div>
+                    {{ form_end(formLFHF) }}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Libellé</th>
+                            <th>Montant</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for l in FF.ligneFraisHorsForfait %}
+                            <tr>
+                                <td>{{ l.date|date('o F') }}</td>
+                                <td>{{ l.libelle }}</td>
+                                <td>{{ l.montant }}</td>
+                            </tr>
+                        {%endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
