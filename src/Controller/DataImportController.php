@@ -138,7 +138,7 @@ class DataImportController extends AbstractController
         ]);
     }
 
-    #[Route('/dataimportligneFraisHorsForfait', name: 'app_data_ligneFraisHorsForfait')]
+    #[Route('/dataimportlignefraishorsforfait', name: 'app_data_ligneFraisHorsForfait')]
     public function ligneFraisHorsForfait(ManagerRegistry $doctrine): Response
     {
         $path="./lignefraishorsforfait.json";
