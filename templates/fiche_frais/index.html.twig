@@ -10,7 +10,6 @@
     .card{
         text-align: center;
         margin: 20px;
-
     }
     .row{
         justify-content: center;
@@ -21,12 +20,10 @@
         display: inline-block;
     }
     .card-body{
-
-        background-color: #ffd1dc;
         display: flex;
     }
     .card table th{
-        background-color: #ffa6c1;
+        background-color: #ccc;
     }
 
 </style>
@@ -34,7 +31,7 @@
 <div class="fiche_frais_form">
     <h1 class="text-align-center">Bonjour {{ user.prenom }}!</h1>
 
-    <h3>Choisi le mois de la fiche frais :</h3>
+    <h3>Choisi le mois de la fiche frais que tu souhaites afficher:</h3>
 
     <div class="card" >
         {{ form_start(form) }}
@@ -51,16 +48,17 @@
         {{ form_end(form) }}
     </div>
 
-
     {% if bool == true %}
 
-        <div class="row">
-            <div class="col-md-3" style="margin:10px">
+        <div class="row" style="display: flex">
+            <div class="col-md-3" style="width: fit-content">
                 <div class="card">
-                    <p>Etat : {{ FF.etat.libelle }} depuis le {{ FF.dateDerniereModif|date('o F') }}</p>
-                    <p>Montant validé : {{ FF.montantValide }}€</p>
+                    <ul class="list-unstyled" >
+                        <li>Etat : {{ FF.etat.libelle }} depuis le {{ FF.dateDerniereModif|date('o F') }}</li>
+                        <li>Montant validé : {{ FF.montantValide }}€</li>
+                    </ul>
                     <div class="card-body">
-                        <table>
+                        <table class="table-bordered">
                             <thead>
                             <tr>
                                 <th>Forfait étape</th>
@@ -80,11 +78,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3" style="margin:10px; width: fit-content">
+            <div class="col-md-3" style="width: fit-content">
                 <div class="card">
                     <p>Descriptif des éléments hors forfait - {{ FF.nbrJustificatif}} justificatifs reçus </p>
                     <div class="card-body">
-                        <table>
+                        <table class="table-bordered">
                             <thead>
                             <tr>
                                 <th>Date</th>
@@ -106,7 +104,6 @@
                 </div>
             </div>
         </div>
-
 
     {% endif %}
 </div>

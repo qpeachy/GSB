@@ -30,6 +30,9 @@ class CurrentFicheFraisController extends AbstractController
         /** @var \App\Entity\User $user */
         $user = $this->getUser();
 
+        $errorLigneFF='';
+        $errorLigneFHF='';
+
         //get current YearMonth
         $currentMonth = date('Ym');
         //get FF of $currentMonth
@@ -85,13 +88,18 @@ class CurrentFicheFraisController extends AbstractController
         $formLigneFF->handleRequest($request);
         //When form is validated
         if ($formLigneFF->isSubmitted() && $formLigneFF->isValid()) {
-            $currentFF->getLigneFraisForfaitise()[0]->setQuantite($formLigneFF->get('FE')->getData());
-            $currentFF->getLigneFraisForfaitise()[1]->setQuantite($formLigneFF->get('FK')->getData());
-            $currentFF->getLigneFraisForfaitise()[2]->setQuantite($formLigneFF->get('NH')->getData());
-            $currentFF->getLigneFraisForfaitise()[3]->setQuantite($formLigneFF->get('RR')->getData());
+            if($formLigneFF->get('FE')->getData() < 0 || $formLigneFF->get('FK')->getData() < 0 ||
+                $formLigneFF->get('NH')->getData() < 0 || $formLigneFF->get('RR')->getData() < 0){
+                $errorLigneFF = 'Les données ne peuvent êtres inferieure à 0';
+            }else{
+                $currentFF->getLigneFraisForfaitise()[0]->setQuantite($formLigneFF->get('FE')->getData());
+                $currentFF->getLigneFraisForfaitise()[1]->setQuantite($formLigneFF->get('FK')->getData());
+                $currentFF->getLigneFraisForfaitise()[2]->setQuantite($formLigneFF->get('NH')->getData());
+                $currentFF->getLigneFraisForfaitise()[3]->setQuantite($formLigneFF->get('RR')->getData());
 
-            $doctrine->getManager()->persist($currentFF); //persist the object $currentFF in the database
-            $doctrine->getManager()->flush(); // flush is called to persist it
+                $doctrine->getManager()->persist($currentFF); //persist the object $currentFF in the database
+                $doctrine->getManager()->flush(); // flush is called to persist it
+            }
         }
 
         //Create Ligne Frais Hors Forfait form
@@ -101,16 +109,22 @@ class CurrentFicheFraisController extends AbstractController
 
         //When form is validated
         if ($formLigneFHF->isSubmitted() && $formLigneFHF->isValid()) {
-            $currentFF->addLigneFraisHorsForfait($LFHF);
-            $doctrine->getManager()->persist($currentFF); //persist the object $currentFF in the database
-            $doctrine->getManager()->flush(); // flush is called to persist it
+            if($formLigneFHF->get('montant')->getData() < 0){
+                $errorLigneFHF = 'Le montant ne peut être inferieur à 0';
+            }else{
+                $currentFF->addLigneFraisHorsForfait($LFHF);
+                $doctrine->getManager()->persist($currentFF); //persist the object $currentFF in the database
+                $doctrine->getManager()->flush(); // flush is called to persist it
+            }
         }
 
         return $this->render('current_fiche_frais/index.html.twig', [
                 'formLFF'=>$formLigneFF,
                 'formLFHF' => $formLigneFHF,
                 'mois' => $currentMonth,
-                'FF' => $currentFF
+                'FF' => $currentFF,
+                'errorLFF' => $errorLigneFF,
+                'errorLFHF' => $errorLigneFHF,
             ]);
     }
 }

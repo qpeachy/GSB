@@ -14,11 +14,12 @@
             margin: 10px;
         }
         .card table th{
-            background-color: #ffa6c1;
+            background-color: #ccc;
         }
         .container{
             display: block; align-items: center;
         }
+
     </style>
     <div class="current_form">
         <h1>Modification de la fiche du mois</h1>
@@ -70,7 +71,7 @@
                 {% if FF.ligneFraisHorsForfait.count > 0 %}
                     <div class="col-md-4">
                         <div class="card">
-                            <table>
+                            <table class="table-bordered">
                                 <thead>
                                 <tr>
                                     <th>Date</th>
@@ -92,6 +93,14 @@
                     </div>
                 {% endif %}
             </div>
+
+            {% if errorLFF %}
+                <div class="error_message" style="font-style: oblique; color: #b70000">{{ errorLFF }}</div>
+            {% endif %}
+
+            {% if errorLFHF %}
+                <div class="error_message" style="font-style: oblique; color: #b70000">{{ errorLFHF }}</div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
