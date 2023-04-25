@@ -17,7 +17,7 @@ class LigneFFType extends AbstractType
         $builder
             ->add('FE', IntegerType::class, [
                 'label' => 'Forfait Etape',
-                'data' => $options['FE']
+                'data' => $options['FE'],
             ])
 
             ->add('FK', IntegerType::class, [

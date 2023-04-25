@@ -55,7 +55,7 @@
     {% if bool == true %}
 
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-3" style="margin:10px">
                 <div class="card">
                     <p>Etat : {{ FF.etat.libelle }} depuis le {{ FF.dateDerniereModif|date('o F') }}</p>
                     <p>Montant validé : {{ FF.montantValide }}€</p>
@@ -80,7 +80,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3" style="margin:10px; width: fit-content">
                 <div class="card">
                     <p>Descriptif des éléments hors forfait - {{ FF.nbrJustificatif}} justificatifs reçus </p>
                     <div class="card-body">
